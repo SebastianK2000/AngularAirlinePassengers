@@ -1,0 +1,15 @@
+.status {
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    display: block;
+    margin: 8px 10px 0 0;
+    float: left;
+    border-radius: 50%;
+    &.check-in {
+        background: #2ecc71;
+    }
+    &.false {
+        background: #e74c3c;
+    }
+}
