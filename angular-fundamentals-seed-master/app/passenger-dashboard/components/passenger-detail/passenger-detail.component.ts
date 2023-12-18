@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnChanges, OnInit, Input, Output, EventEmitter, SimpleChanges } from "@angular/core";
 
 import { Passenger } from "../../models/passenger.interface";
 
@@ -22,10 +22,6 @@ import { Passenger } from "../../models/passenger.interface";
                 Check in date:
                 {{ detail.checkInDate ? (detail.checkInDate | date: 'yMMMMd' | uppercase) : 'Not checked in' }}
             </div>
-
-            <div class="children">
-                Children: {{ detail.children?.length || 0 }}
-            </div>
             <button (click)="toggleEdit()">
                 {{ editing ? 'Done' : 'Edit' }}
             </button>
@@ -36,7 +32,7 @@ import { Passenger } from "../../models/passenger.interface";
     `
 })
 
-export class PassengerDetailComponent {
+export class PassengerDetailComponent implements OnChanges, OnInit {
 
     @Input()
     detail: Passenger;
@@ -50,12 +46,23 @@ export class PassengerDetailComponent {
     editing: boolean = false;
     
     constructor() {}
+
+    ngOnChanges(changes) {
+        if (changes.detail) {
+            this.detail = Object.assign({}, changes.detail.currentValue);
+        }
+    }
+
+    ngOnInit() {}   
     
     onNameChange(value: string) {
         this.detail.fullname = value;
     }
-    
+
     toggleEdit() {
+        if (this.editing) {
+            this.edit.emit(this.detail);
+        }
         this.editing = !this.editing;
     }
 
