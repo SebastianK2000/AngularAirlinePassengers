@@ -47,7 +47,7 @@ export class PassengerDashboardService {
         .catch((error: any) => Observable.throw(error.json()));
     }
 
-    removePassengers(passenger: Passenger): Observable<Passenger> {
+    removePassenger(passenger: Passenger): Observable<Passenger> {
         return this.http
         .delete(`${PASSENGER_API}/${passenger.id}`)
         .map((response: Response) => response.json())
